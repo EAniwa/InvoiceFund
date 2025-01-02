@@ -19,11 +19,3 @@ export async function checkUserVerification() {
 
   return profile?.verification_status === 'approved';
 }
-export async function getUsers() {
-  const { data, error } = await supabase
-    .from('user_profiles')
-    .select('*');
-  
-  if (error) throw error;
-  return data;
-}
