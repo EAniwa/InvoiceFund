@@ -8,6 +8,7 @@ import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { AdminVerification } from './pages/AdminVerification';
 import { InvestorDashboard } from './pages/InvestorDashboard';
+import { VerificationPending } from './components/auth/VerificationPending';
 
 function App() {
   return (
@@ -20,7 +21,8 @@ function App() {
             <Route path="/dashboard" element={<InvestorDashboard />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/admin/verification" element={<AdminVerification />} /> {/* Added admin route */}
+            <Route path="/verification-pending" element={<VerificationPending />} />
+            <Route path="/admin/verification" element={<AdminVerification />} />
           </Routes>
         </main>
         <Footer />
