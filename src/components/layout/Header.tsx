@@ -7,7 +7,7 @@ export function Header() {
   const location = useLocation();
   const navigate = useNavigate();
   const isInvestorDashboard = location.pathname === '/dashboard';
-  const isAdminVerification = location.pathname === '/adminverification'; // Added condition for admin verification page
+  const isAdminVerification = location.pathname === '/admin/verification'; // Added condition for admin verification page
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
