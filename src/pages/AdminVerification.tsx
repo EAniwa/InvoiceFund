@@ -23,13 +23,8 @@ export function AdminVerification() {
     const { data: profiles, error } = await supabase
       .from('user_profiles')
       .select(`
-        id,
-        first_name,
-        last_name,
-        user_type,
-        company_name,
-        verification_status,
-        users:id(email)
+        *,
+        auth:auth.users(email)
       `)
       .eq('verification_status', 'pending');
 
