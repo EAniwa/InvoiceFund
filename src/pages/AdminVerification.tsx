@@ -1,5 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { LogOut } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
 interface UserProfile {
@@ -48,9 +50,25 @@ export function AdminVerification() {
     await loadPendingUsers();
   };
 
+  const navigate = useNavigate();
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    navigate('/login');
+  };
+
   return (
     <div className="max-w-7xl mx-auto py-6 px-4">
-      <h1 className="text-2xl font-bold mb-6">Pending Verifications</h1>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold">Pending Verifications</h1>
+        <button
+          onClick={handleSignOut}
+          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+        >
+          <LogOut className="h-4 w-4 mr-2" />
+          Sign Out
+        </button>
+      </div>
       <div className="bg-white shadow overflow-hidden sm:rounded-md">
         <ul className="divide-y divide-gray-200">
           {users.map(user => (
