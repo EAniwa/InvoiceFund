@@ -70,8 +70,13 @@ export function AdminVerification() {
         </button>
       </div>
       <div className="bg-white shadow overflow-hidden sm:rounded-md">
-        <ul className="divide-y divide-gray-200">
-          {users.map(user => (
+        {users.length === 0 ? (
+          <div className="p-6 text-center text-gray-500">
+            No accounts to be verified
+          </div>
+        ) : (
+          <ul className="divide-y divide-gray-200">
+            {users.map(user => (
             <li key={user.id} className="p-4">
               <div className="flex items-center justify-between">
                 <div>
@@ -98,7 +103,8 @@ export function AdminVerification() {
               </div>
             </li>
           ))}
-        </ul>
+          </ul>
+        )}
       </div>
     </div>
   );
