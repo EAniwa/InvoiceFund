@@ -8,7 +8,6 @@ import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { AdminVerification } from './pages/AdminVerification';
 import { InvestorDashboard } from './pages/InvestorDashboard';
-import { SMEDashboard } from './pages/SMEDashboard';
 import { VerificationPending } from './components/auth/VerificationPending';
 
 function App() {
@@ -19,9 +18,7 @@ function App() {
         <main className="flex-grow">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/dashboard/investor" element={<InvestorDashboard />} />
-            <Route path="/dashboard/sme" element={<SMEDashboard />} />
+            <Route path="/dashboard" element={<InvestorDashboard />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/verification-pending" element={<VerificationPending />} />
