@@ -1,11 +1,18 @@
 
 import React from 'react';
-import { Building2, LogIn } from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
+import { Building2, LogIn, LogOut } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { supabase } from '../../lib/supabase';
 
 export function Header() {
   const location = useLocation();
+  const navigate = useNavigate();
   const isInvestorDashboard = location.pathname === '/dashboard';
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    navigate('/login');
+  };
 
   return (
     <header className="bg-white border-b border-gray-200">
@@ -25,7 +32,15 @@ export function Header() {
             <Link to="/how-it-works" className="text-gray-600 hover:text-gray-900">
               How it Works
             </Link>
-            {!isInvestorDashboard && (
+            {isInvestorDashboard ? (
+              <button
+                onClick={handleSignOut}
+                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+              >
+                <LogOut className="h-4 w-4 mr-2" />
+                Sign Out
+              </button>
+            ) : (
               <Link
                 to="/login"
                 className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
