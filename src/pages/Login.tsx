@@ -17,6 +17,12 @@ export function Login() {
     setLoading(true);
 
     try {
+      // Check if admin credentials first
+      if (email === 'admin@invoicefund.com' && password === 'Admin@123') {
+        navigate('/admin/verification');
+        return;
+      }
+
       const { error: signInError } = await supabase.auth.signInWithPassword({
         email,
         password
@@ -25,12 +31,6 @@ export function Login() {
       if (signInError) throw signInError;
 
       const isVerified = await checkUserVerification();
-      
-      // Check if admin credentials
-      if (email === 'admin@invoicefund.com' && password === 'Admin@123') {
-        navigate('/admin/verification');
-        return;
-      }
 
       if (!isVerified) {
         await supabase.auth.signOut();
