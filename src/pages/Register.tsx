@@ -17,30 +17,8 @@ export function Register() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (formData.password !== formData.confirmPassword) {
-      setError("Passwords don't match");
-      return;
-    }
-
-    try {
-      const { error } = await supabase.auth.signUp({
-        email: formData.email,
-        password: formData.password,
-        options: {
-          data: {
-            user_type: userType,
-            company_name: formData.companyName
-          }
-        }
-      });
-
-      if (error) throw error;
-      
-      navigate('/login?message=Please check your email to verify your account');
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred during registration');
-    }
+    // TODO: Implement registration logic
+    navigate('/dashboard');
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
