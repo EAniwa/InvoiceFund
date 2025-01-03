@@ -26,6 +26,12 @@ export function Login() {
 
       const isVerified = await checkUserVerification();
       
+      // Check if admin credentials
+      if (email === 'admin@example.com' && password === 'admin123') {
+        navigate('/admin/verification');
+        return;
+      }
+
       if (!isVerified) {
         await supabase.auth.signOut();
         setError('Your account is pending verification. Please wait for admin approval.');
