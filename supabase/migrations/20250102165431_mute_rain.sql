@@ -46,12 +46,13 @@ CREATE POLICY "Users can read own profile"
 CREATE OR REPLACE FUNCTION handle_new_user()
 RETURNS TRIGGER AS $$
 BEGIN
-  INSERT INTO public.user_profiles (id, first_name, last_name, user_type)
+  INSERT INTO public.user_profiles (id, first_name, last_name, user_type, company_name)
   VALUES (
     new.id,
-    COALESCE(new.raw_user_meta_data->>'firstName', ''),
-    COALESCE(new.raw_user_meta_data->>'lastName', ''),
-    COALESCE(new.raw_user_meta_data->>'user_type', 'investor')
+    new.raw_user_meta_data->>'firstName',
+    new.raw_user_meta_data->>'lastName',
+    COALESCE(new.raw_user_meta_data->>'user_type', 'investor'),
+    new.raw_user_meta_data->>'companyName'
   );
   RETURN new;
 END;

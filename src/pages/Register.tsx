@@ -38,8 +38,10 @@ export function Register() {
         password: formData.password,
         options: {
           data: {
+            firstName: formData.firstName,
+            lastName: formData.lastName,
             user_type: userType,
-            company_name: formData.companyName || null
+            companyName: formData.companyName || null
           }
         }
       });
