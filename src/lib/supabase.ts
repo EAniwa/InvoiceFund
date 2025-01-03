@@ -19,3 +19,17 @@ export async function checkUserVerification() {
 
   return profile?.verification_status === 'approved';
 }
+
+CREATE OR REPLACE FUNCTION handle_new_user()
+RETURNS TRIGGER AS $$
+BEGIN
+  INSERT INTO public.user_profiles (id, first_name, last_name, user_type)
+  VALUES (
+    new.id,
+    COALESCE(new.raw_user_meta_data->>'firstName', ''),
+    COALESCE(new.raw_user_meta_data->>'lastName', ''),
+    COALESCE(new.raw_user_meta_data->>'user_type', 'investor')
+  );
+  RETURN new;
+END;
+$$ LANGUAGE plpgsql;

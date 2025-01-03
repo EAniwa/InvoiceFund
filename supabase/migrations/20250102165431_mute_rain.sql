@@ -23,6 +23,8 @@ CREATE TYPE verification_status AS ENUM ('pending', 'approved', 'rejected');
 -- Create user_profiles table
 CREATE TABLE IF NOT EXISTS user_profiles (
   id uuid PRIMARY KEY REFERENCES auth.users(id),
+  first_name text NOT NULL,
+  last_name text NOT NULL,
   user_type user_type NOT NULL,
   company_name text,
   verification_status verification_status NOT NULL DEFAULT 'pending',
