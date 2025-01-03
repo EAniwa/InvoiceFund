@@ -18,7 +18,9 @@ function App() {
         <main className="flex-grow">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/dashboard" element={<InvestorDashboard />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard/investor" element={<InvestorDashboard />} />
+            <Route path="/dashboard/sme" element={<SMEDashboard />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/verification-pending" element={<VerificationPending />} />
