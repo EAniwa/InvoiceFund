@@ -15,39 +15,31 @@ export function Register() {
     acceptTerms: false
   });
 
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError(null);
-    setLoading(true);
-
+    
     if (formData.password !== formData.confirmPassword) {
       setError("Passwords don't match");
-      setLoading(false);
       return;
     }
 
     try {
-      const { data, error: signUpError } = await supabase.auth.signUp({
+      const { error } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
         options: {
           data: {
             user_type: userType,
-            company_name: formData.companyName || null
+            company_name: formData.companyName
           }
         }
       });
 
-      if (signUpError) throw signUpError;
-
+      if (error) throw error;
+      
       navigate('/login?message=Please check your email to verify your account');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Registration failed');
-    } finally {
-      setLoading(false);
+      setError(err instanceof Error ? err.message : 'An error occurred during registration');
     }
   };
 
@@ -97,11 +89,6 @@ export function Register() {
           </Link>
         </div>
 
-        {error && (
-          <div className="rounded-md bg-red-50 p-4">
-            <div className="text-sm text-red-700">{error}</div>
-          </div>
-        )}
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="rounded-md shadow-sm -space-y-px">
             <div>
