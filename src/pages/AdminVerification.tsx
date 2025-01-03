@@ -25,14 +25,14 @@ export function AdminVerification() {
         user_type,
         company_name,
         verification_status,
-        auth.users!inner(email)
+        users!inner(email)
       `)
       .eq('verification_status', 'pending');
 
     if (profiles) {
       setUsers(profiles.map(profile => ({
         ...profile,
-        email: profile.auth.users.email
+        email: profile.users.email
       })));
     }
   };
