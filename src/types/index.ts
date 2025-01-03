@@ -1,6 +1,8 @@
 export interface User {
   id: string;
   email: string;
+  firstName: string;
+  lastName: string;
   userType: 'sme' | 'investor';
   companyName?: string;
   verificationStatus: 'pending' | 'verified' | 'rejected';
