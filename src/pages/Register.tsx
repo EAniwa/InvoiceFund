@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { UserPlus } from 'lucide-react';
+import { supabase } from '../lib/supabase';
 
 export function Register() {
   const [searchParams] = useSearchParams();
@@ -15,10 +16,39 @@ export function Register() {
     acceptTerms: false
   });
 
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement registration logic
-    navigate('/dashboard');
+    setError(null);
+    setLoading(true);
+
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords don't match");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const { data, error: signUpError } = await supabase.auth.signUp({
+        email: formData.email,
+        password: formData.password,
+        options: {
+          data: {
+            user_type: userType,
+            company_name: formData.companyName || null
+          }
+        }
+      });
+
+      if (signUpError) throw signUpError;
+
+      navigate('/login?message=Please check your email to verify your account');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Registration failed');
+      setLoading(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,6 +96,12 @@ export function Register() {
             Register as Investor
           </Link>
         </div>
+
+        {error && (
+          <div className="rounded-md bg-red-50 p-4 mt-4">
+            <div className="text-sm text-red-700">{error}</div>
+          </div>
+        )}
 
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="rounded-md shadow-sm -space-y-px">
@@ -169,7 +205,7 @@ export function Register() {
               <span className="absolute left-0 inset-y-0 flex items-center pl-3">
                 <UserPlus className="h-5 w-5 text-blue-500 group-hover:text-blue-400" />
               </span>
-              Create Account
+              {loading ? 'Creating Account...' : 'Create Account'}
             </button>
           </div>
         </form>
