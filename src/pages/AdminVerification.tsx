@@ -35,8 +35,11 @@ export function AdminVerification() {
 
     if (profiles) {
       setUsers(profiles.map(profile => ({
-        ...profile,
-        email: profile.users?.email || ''
+        id: profile.id,
+        email: profile.users.email,
+        user_type: profile.user_type,
+        company_name: profile.company_name,
+        verification_status: profile.verification_status
       })));
     }
   };
