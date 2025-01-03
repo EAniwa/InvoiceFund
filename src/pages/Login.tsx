@@ -27,7 +27,7 @@ export function Login() {
       const isVerified = await checkUserVerification();
       
       // Check if admin credentials
-      if (email === 'admin@example.com' && password === 'admin123') {
+      if (email === 'admin@invoicefund.com' && password === 'Admin@123') {
         navigate('/admin/verification');
         return;
       }
