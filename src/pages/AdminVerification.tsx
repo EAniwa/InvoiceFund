@@ -20,24 +20,26 @@ export function AdminVerification() {
   }, []);
 
   const loadPendingUsers = async () => {
-    const { data: profiles } = await supabase
+    const { data: profiles, error } = await supabase
       .from('user_profiles')
       .select(`
         id,
+        first_name,
+        last_name,
         user_type,
         company_name,
         verification_status,
-        users!inner (
-          email
-        )
+        users:id(email)
       `)
-      .eq('verification_status', 'pending')
-      .order('created_at', { ascending: false });
+      .eq('verification_status', 'pending');
+
+    console.log('Pending profiles:', profiles);
+    console.log('Error if any:', error);
 
     if (profiles) {
       setUsers(profiles.map(profile => ({
         id: profile.id,
-        email: profile.users.email,
+        email: profile.users?.email || '',
         user_type: profile.user_type,
         company_name: profile.company_name,
         verification_status: profile.verification_status
