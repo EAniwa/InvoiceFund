@@ -34,7 +34,7 @@ export function Login() {
 
       if (!isVerified) {
         await supabase.auth.signOut();
-        setError('Your account is pending verification. Please wait for admin approval.');
+        navigate('/verification-pending');
         return;
       }
 

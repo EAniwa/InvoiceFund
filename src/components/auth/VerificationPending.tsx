@@ -11,8 +11,8 @@ export function VerificationPending() {
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
           Verification Pending
         </h2>
-        <p className="mt-2 text-center text-sm text-gray-600">
-          Your account is currently under review. We'll notify you once your account has been verified.
+        <p className="mt-2 text-center text-sm text-gray-600 max-w-md mx-auto">
+          Your account is currently pending verification by an administrator. You will not be able to log in until your account has been verified. Please check back later.
         </p>
       </div>
     </div>

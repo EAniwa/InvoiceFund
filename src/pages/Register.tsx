@@ -48,7 +48,7 @@ export function Register() {
 
       if (signUpError) throw signUpError;
 
-      navigate('/login?message=Please check your email to verify your account');
+      navigate('/verification-pending');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Registration failed');
       setLoading(false);
