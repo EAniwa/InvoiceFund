@@ -27,11 +27,12 @@ export function AdminVerification() {
         user_type,
         company_name,
         verification_status,
-        users (
+        users!inner (
           email
         )
       `)
-      .eq('verification_status', 'pending');
+      .eq('verification_status', 'pending')
+      .order('created_at', { ascending: false });
 
     if (profiles) {
       setUsers(profiles.map(profile => ({
