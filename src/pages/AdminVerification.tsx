@@ -29,7 +29,7 @@ export function AdminVerification() {
         user_type,
         company_name,
         verification_status,
-        users:users(email)
+        auth_user:auth.users(email)
       `)
       .eq('verification_status', 'pending');
 
@@ -39,7 +39,7 @@ export function AdminVerification() {
     if (profiles) {
       setUsers(profiles.map(profile => ({
         id: profile.id,
-        email: profile.users?.email || '',
+        email: profile.auth_user?.email || '',
         user_type: profile.user_type,
         company_name: profile.company_name,
         verification_status: profile.verification_status
