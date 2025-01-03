@@ -6,7 +6,8 @@ import { Home } from './pages/Home';
 import { Dashboard } from './pages/Dashboard';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
-import { AdminVerification } from './pages/AdminVerification'; // Import the AdminVerification component
+import { AdminVerification } from './pages/AdminVerification';
+import { InvestorDashboard } from './pages/InvestorDashboard';
 
 function App() {
   return (
