@@ -23,13 +23,10 @@ export function AdminVerification() {
     const { data: profiles, error } = await supabase
       .from('user_profiles')
       .select(`
-        id,
-        first_name,
-        last_name,
-        user_type,
-        company_name,
-        verification_status,
-        users:auth.users(email)
+        *,
+        user:auth_users (
+          email
+        )
       `)
       .eq('verification_status', 'pending');
 
@@ -39,7 +36,7 @@ export function AdminVerification() {
     if (profiles) {
       setUsers(profiles.map(profile => ({
         id: profile.id,
-        email: profile.users?.[0]?.email || '',
+        email: profile.user?.email || '',
         user_type: profile.user_type,
         company_name: profile.company_name,
         verification_status: profile.verification_status
