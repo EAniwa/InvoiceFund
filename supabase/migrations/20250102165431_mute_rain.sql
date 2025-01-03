@@ -46,8 +46,13 @@ CREATE POLICY "Users can read own profile"
 CREATE OR REPLACE FUNCTION handle_new_user()
 RETURNS TRIGGER AS $$
 BEGIN
-  INSERT INTO public.user_profiles (id, user_type)
-  VALUES (new.id, 'investor');
+  INSERT INTO public.user_profiles (id, first_name, last_name, user_type)
+  VALUES (
+    new.id,
+    COALESCE(new.raw_user_meta_data->>'firstName', ''),
+    COALESCE(new.raw_user_meta_data->>'lastName', ''),
+    COALESCE(new.raw_user_meta_data->>'user_type', 'investor')
+  );
   RETURN new;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
