@@ -19,6 +19,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/dashboard" element={<InvestorDashboard />} />
+            <Route path="/sme/dashboard" element={<SMEDashboard />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/verification-pending" element={<VerificationPending />} />

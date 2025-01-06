@@ -38,7 +38,17 @@ export function Login() {
         return;
       }
 
-      navigate('/dashboard');
+      const { data: profile } = await supabase
+        .from('user_profiles')
+        .select('user_type')
+        .eq('id', (await supabase.auth.getUser()).data.user?.id)
+        .single();
+
+      if (profile?.user_type === 'sme') {
+        navigate('/sme/dashboard');
+      } else {
+        navigate('/dashboard');
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
