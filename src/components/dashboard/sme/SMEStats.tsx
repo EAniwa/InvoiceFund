@@ -6,10 +6,17 @@ import { DollarSign, FileText, PieChart } from 'lucide-react';
 interface SMEStatsProps {
   totalFunded: number;
   pendingInvoices: number;
-  fundingProgress: number;
+  invoices: Invoice[];
 }
 
-export function SMEStats({ totalFunded, pendingInvoices, fundingProgress }: SMEStatsProps) {
+export function SMEStats({ totalFunded, pendingInvoices, invoices }: SMEStatsProps) {
+  const fundingProgress = invoices.length === 0 ? 0 : 
+    Math.round((invoices.reduce((sum, invoice) => {
+      const fundedAmount = invoice.chunks
+        .filter(chunk => chunk.status === 'funded')
+        .reduce((total, chunk) => total + chunk.amount, 0);
+      return sum + (fundedAmount / invoice.amount * 100);
+    }, 0) / invoices.length));
   return (
     <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
       <StatCard
