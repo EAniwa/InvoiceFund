@@ -8,7 +8,35 @@ export function InvoiceUpload() {
   const handleUpload = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!file) return;
-    // TODO: Implement file upload to Supabase
+    
+    try {
+      // Upload file to Storage
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Date.now()}.${fileExt}`;
+      const { error: uploadError } = await supabase.storage
+        .from('invoices')
+        .upload(fileName, file);
+
+      if (uploadError) throw uploadError;
+
+      // Create invoice record in database
+      const { error: dbError } = await supabase
+        .from('invoices')
+        .insert({
+          file_path: fileName,
+          status: 'pending',
+          amount: 0, // This should be extracted from the invoice
+          sme_id: (await supabase.auth.getUser()).data.user?.id
+        });
+
+      if (dbError) throw dbError;
+
+      setFile(null);
+      alert('Invoice uploaded successfully!');
+    } catch (error) {
+      console.error('Error uploading invoice:', error);
+      alert('Error uploading invoice');
+    }
   };
 
   return (
