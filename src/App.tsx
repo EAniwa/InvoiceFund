@@ -8,6 +8,7 @@ import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { AdminVerification } from './pages/AdminVerification';
 import { InvestorDashboard } from './pages/InvestorDashboard';
+import { SMEDashboard } from './pages/SMEDashboard';
 import { VerificationPending } from './components/auth/VerificationPending';
 
 function App() {
