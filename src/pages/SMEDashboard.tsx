@@ -1,10 +1,19 @@
 
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { LogOut } from 'lucide-react';
+import { supabase } from '../lib/supabase';
 import { SMEStats } from '../components/dashboard/sme/SMEStats';
 import { InvoiceUpload } from '../components/dashboard/sme/InvoiceUpload';
 import { Invoice } from '../types';
 
 export function SMEDashboard() {
+  const navigate = useNavigate();
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    navigate('/login');
+  };
   // TODO: Replace with actual data from Supabase
   const invoices: Invoice[] = [];
   const userProfile = {
@@ -22,11 +31,20 @@ export function SMEDashboard() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">
-          Welcome back, {userProfile.firstName} {userProfile.lastName}
-        </h1>
-        <p className="text-gray-600">{userProfile.companyName}</p>
+      <div className="flex justify-between items-center mb-8">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">
+            Welcome back, {userProfile.firstName} {userProfile.lastName}
+          </h1>
+          <p className="text-gray-600">{userProfile.companyName}</p>
+        </div>
+        <button
+          onClick={handleSignOut}
+          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+        >
+          <LogOut className="h-4 w-4 mr-2" />
+          Sign Out
+        </button>
       </div>
 
       <SMEStats {...stats} />
