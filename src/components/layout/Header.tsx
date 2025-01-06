@@ -7,7 +7,8 @@ export function Header() {
   const location = useLocation();
   const navigate = useNavigate();
   const isInvestorDashboard = location.pathname === '/dashboard';
-  const isAdminVerification = location.pathname === '/admin/verification'; // Added condition for admin verification page
+  const isSMEDashboard = location.pathname === '/sme/dashboard';
+  const isAdminVerification = location.pathname === '/admin/verification';
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
@@ -26,7 +27,7 @@ export function Header() {
           </div>
 
           <nav className="flex items-center space-x-8">
-            {!isAdminVerification && ( //Conditional rendering to hide buttons on admin verification page
+            {!isAdminVerification && !isSMEDashboard && ( //Hide buttons on admin verification and SME dashboard
               <>
                 <Link to="/about" className="text-gray-600 hover:text-gray-900">
                   About
