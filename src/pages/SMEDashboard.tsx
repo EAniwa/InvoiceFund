@@ -16,11 +16,33 @@ export function SMEDashboard() {
   };
   // TODO: Replace with actual data from Supabase
   const [invoices, setInvoices] = React.useState<Invoice[]>([]);
-  const userProfile = {
-    firstName: 'John',
-    lastName: 'Doe',
-    companyName: 'ACME Corp'
-  };
+  const [userProfile, setUserProfile] = React.useState({
+    firstName: '',
+    lastName: '',
+    companyName: ''
+  });
+
+  React.useEffect(() => {
+    async function fetchUserProfile() {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        const { data: profile } = await supabase
+          .from('user_profiles')
+          .select('first_name, last_name, company_name')
+          .eq('id', user.id)
+          .single();
+          
+        if (profile) {
+          setUserProfile({
+            firstName: profile.first_name,
+            lastName: profile.last_name,
+            companyName: profile.company_name || ''
+          });
+        }
+      }
+    }
+    fetchUserProfile();
+  }, []);
 
   const stats = {
     totalFunded: invoices.filter(i => i.status === 'funded')
