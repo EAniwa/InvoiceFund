@@ -27,7 +27,7 @@ export function Header() {
           </div>
 
           <nav className="flex items-center space-x-8">
-            {!isAdminVerification && !isSMEDashboard && ( //Hide buttons on admin verification and SME dashboard
+            {!isAdminVerification && !isSMEDashboard && location.pathname !== '/marketplace' && ( //Hide buttons on admin verification, SME dashboard and marketplace
               <>
                 <Link to="/about" className="text-gray-600 hover:text-gray-900">
                   About
