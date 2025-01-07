@@ -15,7 +15,7 @@ export function SMEDashboard() {
     navigate('/login');
   };
   // TODO: Replace with actual data from Supabase
-  const invoices: Invoice[] = [];
+  const [invoices, setInvoices] = React.useState<Invoice[]>([]);
   const userProfile = {
     firstName: 'John',
     lastName: 'Doe',
@@ -47,7 +47,7 @@ export function SMEDashboard() {
         </button>
       </div>
 
-      <SMEStats {...stats} />
+      <SMEStats totalFunded={stats.totalFunded} pendingInvoices={stats.pendingInvoices} invoices={invoices} />
       
       <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
         <InvoiceUpload />
